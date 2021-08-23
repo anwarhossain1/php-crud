@@ -10,12 +10,14 @@
 </head>
 <body>
     <div class="container">
-    <?php require_once 'process.php'; ?>
+    <?php require_once 'process.php'; 
+    
+    ?>
     <?php 
        $mysqli = new mysqli('localhost','root','root', 'crud') or die(mysqli_error($mysqli));
        $result = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
     //    pre_r($result)
-      //print_r($result);
+     // print_r($fetched1stName);
     ?>
      
 
@@ -23,16 +25,24 @@
     <div class="d-flex justify-content-center">
         <form action="process.php" method="POST">
         <div class="form-group">
+            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
         <label>First Name</label>
-        <input type="text" name="1stname" class="form-control" placeholder="Enter Your First Name">
+        <input type="text" name="1stname" class="form-control" value="<?php echo $fetched1stName; ?>" placeholder="Enter Your First Name">
         </div>
         <div class="form-group">
         <label>Second Name</label>
-        <input type="text" name="2ndname" class="form-control" placeholder="Enter Your Second Name">
+        <input type="text" name="2ndname" class="form-control" value="<?php echo $fetched2ndName ;?>" placeholder="Enter Your Second Name">
 
         </div>
         <div class="form-group">
-        <button type="submit" class="btn btn-success" name="save" action="index.php">Save</button>
+            <?php 
+            if($update == true): 
+                
+            ?>
+                <button type="submit" class="btn btn-info" name="update" action="index.php">Update</button>
+        <?php else: ?>
+            <button type="submit" class="btn btn-success" name="save" action="index.php">Save</button>
+            <?php endif; ?>
         </div>
         </form>
     </div>
