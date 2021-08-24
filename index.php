@@ -9,11 +9,19 @@
 
 </head>
 <body>
+    <div class="container">
     <?php require_once 'process.php'; ?>
-    <div class="d-flex justify-content-center">
+    <?php 
+       $mysqli = new mysqli('localhost','root','root', 'crud') or die(mysqli_error($mysqli));
+       $result = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
+    //    pre_r($result)
+      //print_r($result);
+    ?>
+     
 
    
-    <form action="process.php" method="POST">
+    <div class="d-flex justify-content-center">
+        <form action="process.php" method="POST">
         <div class="form-group">
         <label>First Name</label>
         <input type="text" name="1stname" class="form-control" placeholder="Enter Your First Name">
@@ -24,12 +32,35 @@
 
         </div>
         <div class="form-group">
-        <button type="submit" class="btn btn-success" name="save">Save</button>
+        <button type="submit" class="btn btn-success" name="save" action="index.php">Save</button>
         </div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center" >
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>First Name</th>
+                     <th>Second Name</th>
+                     <th>Actions</th>
+                 </tr>
+             </thead>
+             <?php
+             while ($row = $result->fetch_assoc()): ?>
+                  <tr>
+                      <td><?php echo $row['1stname'] ?></td>
+                      <td><?php echo $row['2ndname'] ?></td>
+                      <td>
+                          <a href="index.php?edit=<?php echo $row['id'] ?>" class="btn btn-info">UPDATE</a>
+                          <a href="process.php?delete=<?php echo $row['id'] ?>" class="btn btn-danger">DELETE</a>
+                      </td>
+                  </tr>
+                  <?php endwhile; ?>
+         </table>
        
-        
-        
-    </form>
+
+       </div>
+   
     </div>
     
 </body>
